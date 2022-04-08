@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:extended/extended.dart';
 import 'package:fe/screens/job/fireflutter-job/address_search.model.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -14,6 +17,8 @@ class JobService {
   final apiUrl =
       "https://www.juso.go.kr/addrlink/addrEngApi.do?currentPage=1&countPerPage=100&confmKey=U01TX0FVVEgyMDIyMDQwNzIyMDI0MDExMjQzNzE=&resultType=json&keyword=";
 
+  /// DB 에 저장되는 값이 아래와 같이 동일한 문자로 저장이 된다. 대소문자 및 철자가 동일하다.
+  /// 그래서, 검색을 할 때, 동일하게 검색 할 수 있는 것이다.
   final Map<String, List<String>> areas = {
     'Seoul': [
       'Jongno-gu',
@@ -105,63 +110,63 @@ class JobService {
     ],
     'Sejong': [],
     'Gyeonggi-do': [
-      'Suwon city',
+      'Suwon-si',
       'Jangan-gu',
       'Gwonseon-gu',
       'Paldal-gu',
       'Yeongtong-gu',
-      'Seongnam city',
+      'Seongnam-si',
       'Sujeong-gu',
       'Jungwon-gu',
       'Bundang-gu',
-      'Uijeongbu city',
-      'Anyang city',
+      'Uijeongbu-si',
+      'Anyang-si',
       'Manan-gu',
       'Dongan-gu',
-      'Bucheon city',
-      'Gwangmyeong city',
-      'Pyeongtaek city',
-      'Dongducheon city',
-      'Ansan city',
+      'Bucheon-si',
+      'Gwangmyeong-si',
+      'Pyeongtaek-si',
+      'Dongducheon-si',
+      'Ansan-si',
       'Sangnok-gu',
       'Danwon-gu',
-      'Goyang city',
+      'Goyang-si',
       'Deogyang-gu',
       'Ilsandong-gu',
       'Ilsanseo-gu',
-      'Gwacheon city',
-      'Guri city',
-      'Namyangju city',
-      'Osan city',
-      'Siheung city',
-      'Gunpo city',
-      'Uiwang city',
-      'Hanam  city',
-      'Yongin city',
+      'Gwacheon-si',
+      'Guri-si',
+      'Namyangju-si',
+      'Osan-si',
+      'Siheung-si',
+      'Gunpo-si',
+      'Uiwang-si',
+      'Hanam -si',
+      'Yongin-si',
       'Cheoin-gu',
       'Giheung-gu',
       'Suji-gu',
-      'Paju city',
-      'Icheon city',
-      'Anseong city',
-      'Gimpo city',
-      'Hwaseong city',
-      'Gwangju city',
-      'Yangju city',
-      'Pocheon city',
-      'Yeoju city',
+      'Paju-si',
+      'Icheon-si',
+      'Anseong-si',
+      'Gimpo-si',
+      'Hwaseong-si',
+      'Gwangju-si',
+      'Yangju-si',
+      'Pocheon-si',
+      'Yeoju-si',
       'Yeoncheon-gun',
       'Gapyeong-gun',
       'Yangpyeong-gun',
     ],
     'Gangwon-do': [
-      'Chuncheon city',
-      'Wonju city',
-      'Gangneung city',
-      'Donghae city',
-      'Taebaek city',
-      'Sokcho city',
-      'Samcheok city',
+      'Chuncheon-si',
+      'Wonju-si',
+      'Gangneung-si',
+      'Donghae-si',
+      'Taebaek-si',
+      'Sokcho-si',
+      'Samcheok-si',
       'Hongcheon-gun',
       'Hoengseong-gun',
       'Yeongwol-gun',
@@ -175,13 +180,13 @@ class JobService {
       'Yangyang-gun',
     ],
     'Chungcheongbuk-do': [
-      'Cheongju city',
+      'Cheongju-si',
       'Sangdang-gu',
       'Seowon-gu',
       'Heungdeok-gu',
       'Cheongwon-gu',
-      'Chungju city',
-      'Jecheon city',
+      'Chungju-si',
+      'Jecheon-si',
       'Boeun-gun',
       'Okcheon-gun',
       'Yeongdong-gun',
@@ -192,16 +197,16 @@ class JobService {
       'Danyang-gun',
     ],
     'Chungcheongnam-do': [
-      'Cheonan city',
+      'Cheonan-si',
       'Dongnam-gu',
       'Sebuk-gu',
-      'Gongju city',
-      'Boryeong city',
-      'Asan city',
-      'Seosan city',
-      'Nonsan city',
-      'Gyeryong city',
-      'Dangjin city',
+      'Gongju-si',
+      'Boryeong-si',
+      'Asan-si',
+      'Seosan-si',
+      'Nonsan-si',
+      'Gyeryong-si',
+      'Dangjin-si',
       'Gumsan-gun',
       'Buyeo-gun',
       'Socheon-gun',
@@ -211,14 +216,14 @@ class JobService {
       'Taean-gun',
     ],
     'Jeollabuk-do': [
-      'Jeonju city',
+      'Jeonju-si',
       'Wansan-gu',
       'Deokjin-gu',
-      'Gunsan city',
-      'Iksan city',
-      'Jeongeup city',
-      'Namwon city',
-      'Gimje city',
+      'Gunsan-si',
+      'Iksan-si',
+      'Jeongeup-si',
+      'Namwon-si',
+      'Gimje-si',
       'Wanju-gun',
       'Jinan-gun',
       'Muju-gun',
@@ -229,11 +234,11 @@ class JobService {
       'Buan-gun',
     ],
     'Jeollanam-do': [
-      'Mokpo city',
-      'Yeosu city',
-      'Suncheon city',
-      'Naju city',
-      'Gwangyang city',
+      'Mokpo-si',
+      'Yeosu-si',
+      'Suncheon-si',
+      'Naju-si',
+      'Gwangyang-si',
       'Damyang-gun',
       'Gokseong-gun',
       'Gurye-gun',
@@ -253,18 +258,18 @@ class JobService {
       'Sinan-gun',
     ],
     'Gyeongsangbuk-do': [
-      'Pohang city',
+      'Pohang-si',
       'Nam-gu',
       'Buk-gu',
-      'Gyeongju city',
-      'Gimcheon city',
-      'Andong city',
-      'Gumi city',
-      'Yeongju city',
-      'Yeongcheon city',
-      'Sangju city',
-      'Mungyeong city',
-      'Gyeongsan city',
+      'Gyeongju-si',
+      'Gimcheon-si',
+      'Andong-si',
+      'Gumi-si',
+      'Yeongju-si',
+      'Yeongcheon-si',
+      'Sangju-si',
+      'Mungyeong-si',
+      'Gyeongsan-si',
       'Gunwi-gun',
       'Uiseong-gun',
       'Cheongsong-gun',
@@ -280,19 +285,19 @@ class JobService {
       'Ulleung-gun',
     ],
     'Gyeongsangnam-do': [
-      'Changwon city',
+      'Changwon-si',
       'Uichang-gu',
       'Seongsan-gu',
       'Masanhappo-gu',
       'Masanhoewon-gu',
       'Jinhae-gu',
-      'Jinju city',
-      'Tongyeong city',
-      'Sacheon city',
-      'Gimhae city',
-      'Miryang city',
-      'Geoje city',
-      'Yangsan city',
+      'Jinju-si',
+      'Tongyeong-si',
+      'Sacheon-si',
+      'Gimhae-si',
+      'Miryang-si',
+      'Geoje-si',
+      'Yangsan-si',
       'Uiryeong-gun',
       'Haman-gun',
       'Changnyeong-gun',
@@ -305,13 +310,13 @@ class JobService {
       'Hapcheon-gun',
     ],
     'Jeju-do': [
-      'Jeju city',
-      'Seogwipo city',
+      'Jeju-si',
+      'Seogwipo-si',
     ],
   };
 
-  Future inputAddress(context) async {
-    return showDialog(
+  Future<AddressModel?> inputAddress(context) async {
+    return showDialog<AddressModel?>(
       context: context,
       builder: (context) {
         final input = TextEditingController();
@@ -323,23 +328,34 @@ class JobService {
               final dio = Dio();
               final res = await dio.get(url);
               search = AddressSearchModel.fromJson(res.data);
-              print(search);
               setState(() => {});
-              print(search?.addresses);
             }
 
-// Yeoksam
+            // Timer(Duration(milliseconds: 500), () {
+            //   input.text = "Yeoksam";
+            //   if (search != null) return;
+            //   getAddresses(input.text);
+            // });
+
+// Yeoksam Miryang-si
             return AlertDialog(
-              title: Text('Yo'),
+              title: Text(
+                'Search address',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
               content: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
                     children: [
                       Expanded(
                         child: TextField(
                           controller: input,
-                          decoration: InputDecoration(label: Text("input address")),
+                          decoration: InputDecoration(label: Text("Input address.")),
                           onSubmitted: getAddresses,
                         ),
                       ),
@@ -349,28 +365,66 @@ class JobService {
                       )
                     ],
                   ),
+                  spaceXs,
                   Text(
                     'i.e) 536-9, Sinsa-dong',
-                    style: TextStyle(
-                      fontSize: 11,
-                    ),
+                    style: TextStyle(fontSize: 11),
                   ),
+                  spaceSm,
                   if (search == null) Text('Input address and send'),
                   if (search != null && search!.totalCount == 0)
                     Text("No address found, try again."),
                   if (search != null && search!.totalCount > 0)
                     Container(
                       height: 200,
-                      child: Column(
-                        children: search!.addresses.map((e) => Text('e;')).toList(),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: search!.addresses
+                              .map(
+                                (e) => GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(e),
+                                  behavior: HitTestBehavior.opaque,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${e.roadAddr}',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      spaceXxs,
+                                      Text(
+                                        '${e.korAddr}',
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                      Divider(),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .toList(),
+                        ),
                       ),
+                    ),
+                  if (search != null && search!.totalCount > 100)
+                    Column(
+                      children: [
+                        spaceXs,
+                        Text(
+                          '* Warning - there are too much addresses by the search and cannot dispaly all. Please narrow the search.',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ],
                     )
                 ],
               ),
               actions: [
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Select'),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text('Close'),
                 ),
               ],
             );

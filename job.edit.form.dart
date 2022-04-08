@@ -1,7 +1,16 @@
+import 'package:extended/extended.dart';
+import 'package:fe/screens/job/fireflutter-job/address_search.model.dart';
 import 'package:fe/screens/job/fireflutter-job/job.service.dart';
-import 'package:fireflutter/fireflutter.dart';
 import 'package:flutter/material.dart';
 
+/// 직업 입력 양식
+///
+/// TODO: 직업 카테고리를 선택할 수 있도록
+/// TODO: Working Hourse 를 선택 하여, 1시간, 2시간, ... 14시간 까지 선택 할 수 있도록 한다.
+/// TODO: Working days 를 1 day in a week 와 같이 해서 1 day, 2 day, ... 7 day 까지 선택 할 수 있도록 한다.
+/// TODO: 숙식제공 옵션을 두고 선택 할 수 있도록 한다.
+/// TODO: Salary 를 월 110 만 이하, 120 만, 130 만 .... 400 만, 그리고 400 만 이상으로 선택 하도록 한다.
+///
 class JobEditForm extends StatefulWidget {
   const JobEditForm({
     Key? key,
@@ -29,9 +38,20 @@ class _JobEditFormState extends State<JobEditForm> {
   final duty = TextEditingController();
   final salary = TextEditingController();
   final benefit = TextEditingController();
+
+  AddressModel? addr;
+
+  getAddress() async {
+    addr = await JobService.instance.inputAddress(context);
+    print(addr);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Timer(Duration(milliseconds: 100), getAddress);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('Create a job opening'),
         TextField(
@@ -58,11 +78,49 @@ class _JobEditFormState extends State<JobEditForm> {
             labelText: "Email address",
           ),
         ),
-        ElevatedButton(
-            onPressed: () {
-              JobService.instance.inputAddress(context);
-            },
-            child: Text('Input address')),
+        GestureDetector(
+          onTap: getAddress,
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Address'),
+                if (addr == null)
+                  Text('* Select your address.')
+                else
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('${addr?.roadAddr}'),
+                      Text('${addr?.korAddr}'),
+                    ],
+                  ),
+                Row(
+                  children: [
+                    Spacer(),
+                    Text(
+                      'Select',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.blue,
+                      ),
+                    ),
+                    spaceSm,
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        if (addr != null)
+          TextField(
+            controller: detailAddress,
+            decoration: InputDecoration(
+              labelText: "Input detail address",
+            ),
+          ),
         TextField(
           controller: jobCategory,
           decoration: InputDecoration(
@@ -118,10 +176,12 @@ class _JobEditFormState extends State<JobEditForm> {
           ),
         ),
         Divider(),
+
+        /// daesung gimhae
         ElevatedButton(
           onPressed: () async {
             try {
-              await PostApi.instance.create(category: 'job_openings', extra: {
+              final extra = {
                 'companyName': companyName.text,
                 'phoneNumber': phoneNumber.text,
                 'mobileNumber': mobileNumber.text,
@@ -136,7 +196,15 @@ class _JobEditFormState extends State<JobEditForm> {
                 'duty': duty.text,
                 'salary': salary.text,
                 'benefit': benefit.text,
-              });
+                'roadAddr': addr?.roadAddr ?? '',
+                'korAddr': addr?.korAddr ?? '',
+                'zipNo': addr?.zipNo ?? '',
+                'siNm': addr?.siNm ?? '',
+                'sggNm': addr?.sggNm ?? '',
+                'emdNm': addr?.emdNm ?? '',
+              };
+              print(extra);
+              // await PostApi.instance.create(category: 'job_openings', extra: extra);
             } catch (e) {
               widget.onError(e);
             }

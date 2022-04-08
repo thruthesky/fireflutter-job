@@ -19,16 +19,30 @@ class AddressSearchModel {
 }
 
 class AddressModel {
+  /// 우편번호
   String zipNo;
+
+  /// 읍면동
   String emdNm;
   String rn;
   String jibunAddr;
+
+  /// 영문 시,도 명
   String siNm;
+
+  /// 영문 시,군,구 명.
+  /// 주의: 공백을 구분으로 "Gwonseon-gu, Suwon-si" (수원시 권선구) 와 같이 들어갈 수 있는데, 공백이 있으면 뒷 부분(시)만 저장한다.
   String sggNm;
+
+  ///
   String admCd;
   String udrtYn;
   String lnbrMnnm;
+
+  /// 영문 도로명 주소
   String roadAddr;
+
+  /// 한글 도로명 주소
   String korAddr;
   String lnbrSlno;
   String buldMnnm;
@@ -65,7 +79,7 @@ class AddressModel {
       rn: json['rn'],
       jibunAddr: json['jibunAddr'],
       siNm: json['siNm'],
-      sggNm: json['sggNm'],
+      sggNm: ((json['sggNm'] ?? '') as String).split(' ').last,
       admCd: json['admCd'],
       udrtYn: json['udrtYn'],
       lnbrMnnm: json['lnbrMnnm'],
@@ -79,5 +93,28 @@ class AddressModel {
       mtYn: json['mtYn'],
       buldSlno: json['buldSlno'],
     );
+  }
+  @override
+  String toString() {
+    return '''AddressModel(
+'zipNo': $zipNo,
+'emdNm': $emdNm,
+'rn': $rn,
+'jibunAddr': $jibunAddr,
+'siNm': $siNm,
+'sggNm': $sggNm,
+'admCd': $admCd,
+'udrtYn': $udrtYn,
+'lnbrMnnm': $lnbrMnnm,
+'roadAddr': $roadAddr,
+'korAddr': $korAddr,
+'lnbrSlno': $lnbrSlno,
+'buldMnnm': $buldMnnm,
+'bdKdcd': $bdKdcd,
+'rnMgtSn': $rnMgtSn,
+'liNm': $liNm,
+'mtYn': $mtYn,
+'buldSlno': $buldSlno,
+    );''';
   }
 }
