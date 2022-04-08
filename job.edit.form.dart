@@ -1,4 +1,4 @@
-import 'package:fe/service/app.service.dart';
+import 'package:fe/screens/job/fireflutter-job/job.service.dart';
 import 'package:fireflutter/fireflutter.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +60,7 @@ class _JobEditFormState extends State<JobEditForm> {
         ),
         ElevatedButton(
             onPressed: () {
-              AppService.instance.inputAddress(context);
+              JobService.instance.inputAddress(context);
             },
             child: Text('Input address')),
         TextField(
