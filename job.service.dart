@@ -315,6 +315,24 @@ class JobService {
     ],
   };
 
+  final Map<String, String> categories = {
+    'accountant': 'Accountant',
+    'call-center': 'Call center',
+    'construction': 'Construction',
+    'cook': 'Cook, Chef, Backer',
+    'customer-service': 'Customer service',
+    'education': 'Education, Academic, Teacher',
+    'entertainer': 'Entertainer, Musician',
+    'factory-work': 'Factory work',
+    'farm-work': 'Farm work',
+    'management': 'Management',
+    'marketing': 'Marketing, Advertising',
+    'office-work': 'Office work, Clerk, Cashier',
+    'sales': 'Sales, Waiter, Agent',
+    'it': 'Tech & IT',
+    'travel': 'Tour guide, Travel',
+  };
+
   Future<AddressModel?> inputAddress(context) async {
     return showDialog<AddressModel?>(
       context: context,

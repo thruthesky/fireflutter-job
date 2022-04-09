@@ -127,6 +127,13 @@ class _JobEditFormState extends State<JobEditForm> {
             labelText: "Job category(industry) - @todo select box",
           ),
         ),
+        Select(
+          defaultLabel: "Select job category",
+          options: JobService.instance.categories,
+          onChanged: (v) {
+            print(v);
+          },
+        ),
         TextField(
           controller: aboutUs,
           decoration: InputDecoration(
