@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 /// 직업 입력 양식
 ///
-/// TODO: 직업 카테고리를 선택할 수 있도록
+/// TODO: 먼저, 글/코멘트 쓰기/수정/삭제 를 HTTP 로 할 수 있도록 해야 한다. 그리고 포인트 증/감을 카테고리 별로 설정 할 수 있도록 해야 한다.
 /// TODO: Working Hourse 를 선택 하여, 1시간, 2시간, ... 14시간 까지 선택 할 수 있도록 한다.
 /// TODO: Working days 를 1 day in a week 와 같이 해서 1 day, 2 day, ... 7 day 까지 선택 할 수 있도록 한다.
 /// TODO: 숙식제공 옵션을 두고 선택 할 수 있도록 한다.
