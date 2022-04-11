@@ -373,7 +373,8 @@ class JobService {
                       Expanded(
                         child: TextField(
                           controller: input,
-                          decoration: InputDecoration(label: Text("Input address.")),
+                          decoration:
+                              InputDecoration(label: Text("Input address.")),
                           onSubmitted: getAddresses,
                         ),
                       ),
@@ -404,7 +405,8 @@ class JobService {
                                   onTap: () => Navigator.of(context).pop(e),
                                   behavior: HitTestBehavior.opaque,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         '${e.roadAddr}',

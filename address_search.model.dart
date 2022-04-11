@@ -12,8 +12,9 @@ class AddressSearchModel {
     return AddressSearchModel(
       totalCount: int.tryParse(json['results']['common']['totalCount']) ?? 0,
       errorCode: json['results']['common']['errorCode'],
-      addresses:
-          ((json['results']['juso'] ?? []) as List).map((e) => AddressModel.fromMap(e)).toList(),
+      addresses: ((json['results']['juso'] ?? []) as List)
+          .map((e) => AddressModel.fromMap(e))
+          .toList(),
     );
   }
 }
